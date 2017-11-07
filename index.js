@@ -4,6 +4,7 @@
 
 const _ = require('lodash');
 const scraper = require('table-scraper');
+const util = require('util');
 
 const urlMarkets = `https://coinmarketcap.com/currencies/%s/#markets`;
 const urlMarketCap = `https://coinmarketcap.com/`;

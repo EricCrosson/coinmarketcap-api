@@ -19,7 +19,8 @@
     },
     "dependencies": {
         "lodash": "^4.17.4",
-        "table-scraper": "^0.1.0"
+        "table-scraper": "^0.1.0",
+        "util": "^0.10.3"
     },
     "author": "Eric Crosson",
     "bugs": {
