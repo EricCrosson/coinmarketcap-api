@@ -66,3 +66,6 @@ function getMarketCap(coin) {
             return getMatchingMarketCaps(coinmarketcapTable);
         });
 }
+
+module.exports.getMarkets = getMarkets;
+module.exports.getMarketCap = getMarketCap;
