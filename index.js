@@ -5,9 +5,10 @@
 const _ = require('lodash');
 const scraper = require('table-scraper');
 const util = require('util');
+const cryptocurrencies = require('cryptocurrencies');
 
 const urlMarkets = `https://coinmarketcap.com/currencies/%s/#markets`;
-const urlMarketCap = `https://coinmarketcap.com/`;
+const urlMarketCap = `https://coinmarketcap.com/all/views/all`;
 
 function getTopExchangesByVolume(tableData) {
 
@@ -42,7 +43,7 @@ function getMatchingMarketCaps(coin, tableData) {
         }
         var scrapedData = {};
         scrapedData['Symbol'] = coinData['Name'].replace(/\s.*/, '');
-        scrapedData['Currency'] = coinData['Name'].replace(/\S+\s*/, '');
+        scrapedData['Currency'] = coinData['Name'].replace(/^\S+\s*/, '');
         scrapedData['Market cap'] = coinData['Market Cap'];
         parsedData[counter++] = scrapedData;
     });
@@ -54,7 +55,26 @@ function getMarkets(coin) {
 
     return new Promise(function (resolve, reject) {
 
-        const urlCoinMarket = util.format(urlMarkets, coin);
+        console.log('Coin is currently')
+        console.log(coin)
+        var currency = coin;
+        console.log(currency)
+        coin = coin.toUpperCase();
+        if (cryptocurrencies.symbols().indexOf(coin) > 0) {
+            currency = cryptocurrencies[coin];
+        }
+        // Special cases not handled well by available APIs
+        switch (coin) {
+        case "BCH":
+            currency = 'Bitcoin Cash';
+            break;
+        }
+
+        console.log(`Currency is ${currency}`)
+
+        const urlCoinMarket = util.format(urlMarkets, currency.replace(/\s+/, '-'));
+        console.log(`Using url ${urlCoinMarket}`);
+
         scraper
             .get(urlCoinMarket)
             .then(function(tableData) {
