@@ -31,7 +31,7 @@ function getTopExchangesByVolume(tableData) {
     return parsedData;
 }
 
-function getMatchingMarketCaps(tableData) {
+function getMatchingMarketCaps(coin, tableData) {
 
     var parsedData = {};
     var counter = 0;
@@ -51,21 +51,30 @@ function getMatchingMarketCaps(tableData) {
 }
 
 function getMarkets(coin) {
-    scraper
-        .get(util.format(urlMarkets, coin))
-        .then(function(tableData) {
-            const coinmarketcapData = tableData[0];
-            return getTopExchangesByVolume(coinmarketcapData);
-        });
+
+    return new Promise(function (resolve, reject) {
+
+        const urlCoinMarket = util.format(urlMarkets, coin);
+        scraper
+            .get(urlCoinMarket)
+            .then(function(tableData) {
+                const coinmarketData = tableData[0];
+                resolve(getTopExchangesByVolume(coinmarketData));
+            });
+    });
 }
 
 function getMarketCap(coin) {
-    scraper
-        .get(urlMarketCap)
-        .then(function(tableData) {
-            const coinmarketcapTable = tableData[0];
-            return getMatchingMarketCaps(coinmarketcapTable);
-        });
+
+    return new Promise(function (resolve, reject) {
+
+        scraper
+            .get(urlMarketCap)
+            .then(function(tableData) {
+                const coinmarketcapTable = tableData[0];
+                resolve(getMatchingMarketCaps(coin, coinmarketcapTable));
+            });
+    });
 }
 
 module.exports.getMarkets = getMarkets;
