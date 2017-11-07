@@ -55,10 +55,7 @@ function getMarkets(coin) {
 
     return new Promise(function (resolve, reject) {
 
-        console.log('Coin is currently')
-        console.log(coin)
         var currency = coin;
-        console.log(currency)
         coin = coin.toUpperCase();
         if (cryptocurrencies.symbols().indexOf(coin) > 0) {
             currency = cryptocurrencies[coin];
@@ -70,10 +67,7 @@ function getMarkets(coin) {
             break;
         }
 
-        console.log(`Currency is ${currency}`)
-
         const urlCoinMarket = util.format(urlMarkets, currency.replace(/\s+/, '-'));
-        console.log(`Using url ${urlCoinMarket}`);
 
         scraper
             .get(urlCoinMarket)
