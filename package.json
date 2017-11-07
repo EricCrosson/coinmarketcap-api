@@ -1,6 +1,6 @@
 {
     "name": "coinmarketcap-cli-api",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "license": "Apache 2.0",
     "description": "API for accessing information oncoinmarketcap.com",
     "keywords": [
