@@ -5,7 +5,7 @@
 const _ = require('lodash');
 const scraper = require('table-scraper');
 
-const urlMarkets = `https://coinmarketcap.com/currencies/${coin}/#markets`;
+const urlMarkets = `https://coinmarketcap.com/currencies/%s/#markets`;
 const urlMarketCap = `https://coinmarketcap.com/`;
 
 function getTopExchangesByVolume(tableData) {
@@ -51,7 +51,7 @@ function getMatchingMarketCaps(tableData) {
 
 function getMarkets(coin) {
     scraper
-        .get(urlMarkets)
+        .get(util.format(urlMarkets, coin))
         .then(function(tableData) {
             const coinmarketcapData = tableData[0];
             return getTopExchangesByVolume(coinmarketcapData);
