@@ -1,0 +1,29 @@
+{
+    "name": "coinmarketcap-api",
+    "version": "0.1.0",
+    "license": "Apache 2.0",
+    "description": "API for accessing information oncoinmarketcap.com",
+    "keywords": [
+        "coinmarketcap",
+        "cryptocurrency",
+        "bitcoin",
+        "crypto"
+    ],
+    "main": "index.js",
+    "bin": {
+        "coinmarketcap": "index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ericcrosson/coinmarketcap-api.git"
+    },
+    "dependencies": {
+        "lodash": "^4.17.4",
+        "table-scraper": "^0.1.0"
+    },
+    "author": "Eric Crosson",
+    "bugs": {
+        "url": "https://github.com/ericcrosson/coinmarketcap-api/issues"
+    },
+    "homepage": "https://github.com/ericcrosson/coinmarketcap-api"
+}
