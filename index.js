@@ -32,13 +32,19 @@ function getTopExchangesByVolume(tableData) {
     return parsedData;
 }
 
+// TODO: match exactly the market cap
 function getMatchingMarketCaps(coin, tableData) {
 
     var parsedData = {};
     var counter = 0;
 
     _.each(tableData, function(coinData, key) {
-        if (coinData['Name'].toLowerCase().indexOf(coin.toLowerCase()) < 0) {
+        var currency = coin;
+        if (isCryptoSymbol(coin)) {
+            currency = cryptocurrencies[coin.toUpperCase()]
+        }
+        // reject non-matches
+        if (coinData['Name'].replace(/^\S+\s*/,'').toLowerCase().indexOf(currency.toLowerCase()) < 0) {
             return;
         }
         var scrapedData = {};
@@ -51,13 +57,17 @@ function getMatchingMarketCaps(coin, tableData) {
     return parsedData;
 }
 
+function isCryptoSymbol(symbol) {
+    return cryptocurrencies.symbols().indexOf(symbol.toUpperCase()) > 0
+}
+
 function getMarkets(coin) {
 
     return new Promise(function (resolve, reject) {
 
         var currency = coin;
         coin = coin.toUpperCase();
-        if (cryptocurrencies.symbols().indexOf(coin) > 0) {
+        if (isCryptoSymbol(coin)) {
             currency = cryptocurrencies[coin];
         }
         // Special cases not handled well by available APIs
