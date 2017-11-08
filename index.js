@@ -17,9 +17,6 @@ function getTopExchangesByVolume(tableData) {
 
     _.each(tableData, function(data, key) {
         volume = parseFloat(data['Volume (%)'].split("%")[0]);
-        if (volume < 1) {
-            return;
-        }
         var scrapedData = {};
         scrapedData['Exchange'] = data['Source'];
         scrapedData['Pair'] = data['Pair'];
