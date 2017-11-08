@@ -2,6 +2,8 @@
 // Written by Eric Crosson
 // 2017-11-07
 
+'use strict';
+
 const _ = require('lodash');
 const scraper = require('table-scraper');
 const util = require('util');
@@ -16,7 +18,6 @@ function getTopExchangesByVolume(tableData) {
     var counter = 0;
 
     _.each(tableData, function(data, key) {
-        volume = parseFloat(data['Volume (%)'].split("%")[0]);
         var scrapedData = {};
         scrapedData['Exchange'] = data['Source'];
         scrapedData['Pair'] = data['Pair'];
@@ -34,20 +35,21 @@ function getMatchingMarketCaps(coin, tableData) {
     var parsedData = {};
     var counter = 0;
 
-    _.each(tableData, function(coinData, key) {
+    _.each(tableData, function(coinData, index) {
         var currency = coin;
         if (isCryptoSymbol(coin)) {
-            currency = cryptocurrencies[coin.toUpperCase()]
+            currency = cryptocurrencies[coin.toUpperCase()];
         }
         // reject non-matches
         if (!(coinData['Name'].toLowerCase().startsWith(coin.toLowerCase()+' ')
               || coinData['Name'].substr(coinData['Name'].indexOf(' ')+1).toLowerCase().trim() === currency.replace(/\s+\/.*$/,'').toLowerCase())) {
             return;
         }
-        var scrapedData = {};
+        let scrapedData = {};
         scrapedData['Symbol'] = coinData['Name'].replace(/\s.*/, '');
         scrapedData['Currency'] = coinData['Name'].replace(/^\S+\s*/, '');
         scrapedData['Market cap'] = coinData['Market Cap'];
+        scrapedData['Market cap rank'] = index+1;  // 0-indexed
         parsedData[counter++] = scrapedData;
     });
 

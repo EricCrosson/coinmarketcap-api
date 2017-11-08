@@ -39,6 +39,7 @@ Returns a map
     Symbol: BTC,
     Currency: Bitcoin,
     Market cap: $100,000,000,000
+    Market cap rank: 1
 }
 ```
 
