@@ -32,7 +32,6 @@ function getTopExchangesByVolume(tableData) {
     return parsedData;
 }
 
-// TODO: match exactly the market cap
 function getMatchingMarketCaps(coin, tableData) {
 
     var parsedData = {};
@@ -44,7 +43,8 @@ function getMatchingMarketCaps(coin, tableData) {
             currency = cryptocurrencies[coin.toUpperCase()]
         }
         // reject non-matches
-        if (coinData['Name'].replace(/^\S+\s*/,'').toLowerCase().indexOf(currency.toLowerCase()) < 0) {
+        if (!(coinData['Name'].toLowerCase().startsWith(coin.toLowerCase()+' ')
+              || coinData['Name'].substr(coinData['Name'].indexOf(' ')+1).toLowerCase().trim() === currency.replace(/\s+\/.*$/,'').toLowerCase())) {
             return;
         }
         var scrapedData = {};
