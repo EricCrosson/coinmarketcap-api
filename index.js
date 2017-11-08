@@ -14,7 +14,7 @@ const urlMarketCap = `https://coinmarketcap.com/all/views/all`;
 
 function getTopExchangesByVolume(tableData) {
 
-    var parsedData = {};
+    var parsedData = [];
     var counter = 0;
 
     _.each(tableData, function(data, key) {
@@ -32,7 +32,7 @@ function getTopExchangesByVolume(tableData) {
 
 function getMatchingMarketCaps(coin, tableData) {
 
-    var parsedData = {};
+    var parsedData = [];
     var counter = 0;
 
     _.each(tableData, function(coinData, index) {
@@ -55,6 +55,23 @@ function getMatchingMarketCaps(coin, tableData) {
 
     return parsedData;
 }
+
+function getAllMarketCaps(tableData) {
+
+    var parsedData = [];
+
+    _.each(tableData, function(coinData, index) {
+        let scrapedData = {};
+        scrapedData['Symbol'] = coinData['Name'].replace(/\s.*/, '');
+        scrapedData['Currency'] = coinData['Name'].replace(/^\S+\s*/, '');
+        scrapedData['Market cap'] = coinData['Market Cap'];
+        scrapedData['Market cap rank'] = index+1;  // 0-indexed
+        parsedData[index] = scrapedData;
+    });
+
+    return parsedData;
+}
+
 
 function isCryptoSymbol(symbol) {
     return cryptocurrencies.symbols().indexOf(symbol.toUpperCase()) > 0
@@ -100,5 +117,20 @@ function getMarketCap(coin) {
     });
 }
 
+// Return array of market capitalizations, in order of size.
+function getMarketCaps() {
+
+    return new Promise(function (resolve, reject) {
+
+        scraper
+            .get(urlMarketCap)
+            .then(function(tableData) {
+                const coinmarketcapTable = tableData[0];
+                resolve(getAllMarketCaps(coinmarketcapTable));
+            });
+    });
+}
+
 module.exports.getMarkets = getMarkets;
 module.exports.getMarketCap = getMarketCap;
+module.exports.getMarketCaps = getMarketCaps;

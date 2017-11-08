@@ -43,6 +43,23 @@ Returns a map
 }
 ```
 
+### getAllMarketCaps()
+
+Returns an array
+
+```
+[ { Symbol: 'BTC',
+    Currency: 'Bitcoin',
+    'Market cap': '$128,982,906,067',
+    'Market cap rank': 1 },
+  { Symbol: 'ETH',
+    Currency: 'Ethereum',
+    'Market cap': '$28,878,646,139',
+    'Market cap rank': 2 },
+    ...
+]
+```
+
 ## Related
 
 - [coinmarketcap-cli](https://github.com/ericcrosson/coinmarketcap-cli/)
