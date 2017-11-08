@@ -14,7 +14,7 @@ $ npm install coinmarketcap-cli-api
 
 Returns a list maps containing market information by exchange
 
-```json
+```
 [
 { Exchange: 'Bitfinex',
   Pair: 'BTC/USD',
@@ -34,11 +34,11 @@ Returns a list maps containing market information by exchange
 
 Returns a map
 
-```json
+```
 {
-    "Symbol": "BTC",
-    "Currency": "Bitcoin",
-    "Market cap": "$100,000,000,000"
+    Symbol: BTC,
+    Currency: Bitcoin,
+    Market cap: $100,000,000,000
 }
 ```
 
